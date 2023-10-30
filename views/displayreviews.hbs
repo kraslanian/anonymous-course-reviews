@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All The Reviews</title>
+</head>
+<body>
+    <h1>All The Reviews</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Semester</th>
+                <th>Year</th>
+                <th>Professor</th>
+                <th>Review</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each reviews}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{number}}</td>
+                <td>{{semester}}</td>
+                <td>{{year}}</td>
+                <td>{{professor}}</td>
+                <td>{{review}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>
