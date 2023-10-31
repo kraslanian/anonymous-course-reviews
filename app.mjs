@@ -62,6 +62,35 @@ app.get('/', (req, res) => {
     });
 });
 
+// Show the form to add a review
+app.get('/reviews/add', (req, res) => {
+  res.render('addreview');
+});
+
+// Handle the form submission to add a review
+app.post('/reviews/add', (req, res) => {
+  const { courseNumber, courseName, semester, year, professor, review } = req.body;
+
+  const newReview = new Review({
+    courseNumber,
+    courseName,
+    semester,
+    year: parseInt(year), // Ensure year is a number
+    professor,
+    review,
+  });
+
+  newReview.save()
+    .then(() => {
+      res.redirect('/'); // Redirect back to the page that shows all reviews
+    })
+    .catch(error => {
+      console.error("Error adding review:", error);
+      res.status(500).send('Error adding review to the database');
+    });
+});
+
+
 
 console.log((`Started on port: ${process.env.PORT}`))
 app.listen(process.env.PORT || 3000);
