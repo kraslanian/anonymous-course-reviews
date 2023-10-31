@@ -21,18 +21,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 // body parser (req.body)
 app.use(express.urlencoded({ extended: false }));
 
-
-
 app.get('/', (req, res) => {
 
   Review.find({})
   .then((reviews) => {
-    res.render("displayreviews", {reviews});
+    res.render("displayreviews", {reviews: reviews});
     })
 
-    .catch(error => {
+   .catch(error => {
       res.status(500).send('Error fetching reviews from the database');
     });
+    
 });
 
 
