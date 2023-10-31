@@ -5,6 +5,25 @@
 </head>
 <body>
     <h1>All The Reviews</h1>
+    
+    <!-- Filter Form -->
+    <form action="/" method="GET">
+        <label for="semester">Filter by Semester:</label>
+        <select name="semester" id="semester">
+            <option value="">All</option>
+            <option value="Spring">Spring</option>
+            <option value="Fall">Fall</option>
+        </select>
+
+        <label for="year">Filter by Year:</label>
+        <input type="text" name="year" id="year" placeholder="Enter Year">
+
+        <label for="professor">Filter by Professor:</label>
+        <input type="text" name="professor" id="professor" placeholder="Enter Professor's Name">
+
+        <button type="submit">Filter</button>
+    </form>
+    
     <table>
         <thead>
             <tr>
