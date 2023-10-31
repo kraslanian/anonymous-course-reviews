@@ -25,10 +25,11 @@ app.get('/', (req, res) => {
 
   Review.find({})
   .then((reviews) => {
-    res.render("displayreviews", {reviews: reviews});
+    res.render("displayreviews", { reviews});
     })
 
    .catch(error => {
+    console.error("Error fetching reviews:", error);
       res.status(500).send('Error fetching reviews from the database');
     });
     

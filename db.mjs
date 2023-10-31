@@ -6,8 +6,8 @@ config();
 // my schema goes here!
 
 const ReviewSchema = new mongoose.Schema({
-    number: String,
-    name: String,
+    courseNumber: String,
+    courseName: String,
     semester: String,
     year: Number,
     professor: String, 
