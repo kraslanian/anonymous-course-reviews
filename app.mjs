@@ -6,7 +6,7 @@ import Review from "./db.mjs";
 const app = express();
 
 app.use(session({
-  secret: 'your-secret-key', // Replace with a strong, unique secret key
+  secret: 'key', 
   resave: false,
   saveUninitialized: true,
 }));
@@ -14,6 +14,16 @@ app.use(session({
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
+
+// Middleware to increment pageVisits
+app.use((req, res, next) => {
+  if (!req.session.pageVisits) {
+    req.session.pageVisits = 1;
+  } else {
+    req.session.pageVisits++;
+  }
+  next();
+});
 
 app.get('/', (req, res) => {
   const filters = {};
@@ -32,7 +42,7 @@ app.get('/', (req, res) => {
 
   Review.find(filters)
     .then((reviews) => {
-      res.render("displayreviews", { reviews });
+      res.render("displayreviews", { reviews, pageVisits: req.session.pageVisits });
     })
     .catch(error => {
       console.error("Error fetching reviews:", error);
@@ -41,12 +51,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/reviews/add', (req, res) => {
-  res.render('addreview');
+  res.render('addreview', { pageVisits: req.session.pageVisits });
 });
 
 app.get('/reviews/mine', (req, res) => {
   const userReviews = req.session.userReviews || [];
-  res.render('myreviews', { userReviews });
+  Review.find({ _id: { $in: userReviews } })
+    .then((reviews) => {
+      res.render('myreviews', { userReviews: reviews, pageVisits: req.session.pageVisits });
+    })
+    .catch(error => {
+      console.error("Error fetching user reviews:", error);
+      res.status(500).send('Error fetching user reviews from the database');
+    });
 });
 
 app.post('/reviews/add', (req, res) => {
@@ -73,20 +90,6 @@ app.post('/reviews/add', (req, res) => {
       console.error("Error adding review:", error);
       res.status(500).send('Error adding review to the database');
     });
-});
-
-app.use((req, res, next) => {
-  if (!req.session.pageVisits) {
-    req.session.pageVisits = 1;
-  } else {
-    req.session.pageVisits++;
-  }
-  next();
-});
-
-app.use((req, res, next) => {
-  res.locals.pageVisits = req.session.pageVisits;
-  next();
 });
 
 console.log(`Started on port: ${process.env.PORT}`);
