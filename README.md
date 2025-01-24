@@ -52,13 +52,12 @@ DSN=mongodb://localhost/anonymous-course-reviews
 
 7. How to Use
 
-- Navigate to the Home page to view existing course reviews.
-- Click Add Review to submit a new anonymous course review.
-- Use the form to provide details:
-
-    Course number
-    Course name
-    Semester
-    Professor's name
-    Your review
+1. Navigate to the **Home** page to view existing course reviews.
+2. Click **Add Review** to submit a new anonymous course review.
+3. Use the form to provide the following details:
+   - **Course Number**
+   - **Course Name**
+   - **Semester**
+   - **Professor's Name**
+   - **Your Review**
 
